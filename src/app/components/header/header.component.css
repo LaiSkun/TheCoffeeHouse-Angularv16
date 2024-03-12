@@ -1,0 +1,16 @@
+@import "~bootstrap/dist/css/bootstrap.css";
+
+@import url(/src/styles.css);
+.modal-lg{
+  max-width: none;
+}
+.cart-item{
+  position: relative;
+
+}
+.cart-count{
+  position: absolute;
+  font-size: 15px;
+  top: 0;
+  right: 5;
+}

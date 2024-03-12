@@ -1,0 +1,10 @@
+@import url(/src/app/admin/admin-home/admin-home.component.css);
+/* app.component.css */
+.visible {
+  opacity: 1;
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none; /* Ngăn thẻ ẩn đi không thể tương tác */
+}

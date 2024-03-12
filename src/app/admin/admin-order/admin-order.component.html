@@ -1,0 +1,144 @@
+<div class="page-header">
+  <h1>Order Management</h1>
+  <small>Home / Order</small>
+</div>
+
+<div class="page-content">
+
+  <div class="analytics">
+
+    <div class="card">
+      <div class="card-head">
+        <h2>107,200</h2>
+        <span class="las la-user-friends"></span>
+      </div>
+      <div class="card-progress">
+        <small>User activity this month</small>
+        <div class="card-indicator">
+          <div class="indicator one" style="width: 60%"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <h2>340,230</h2>
+        <span class="las la-eye"></span>
+      </div>
+      <div class="card-progress">
+        <small>Page views</small>
+        <div class="card-indicator">
+          <div class="indicator two" style="width: 80%"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <h2>$653,200</h2>
+        <span class="las la-shopping-cart"></span>
+      </div>
+      <div class="card-progress">
+        <small>Monthly revenue growth</small>
+        <div class="card-indicator">
+          <div class="indicator three" style="width: 65%"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <h2>47,500</h2>
+        <span class="las la-envelope"></span>
+      </div>
+      <div class="card-progress">
+        <small>New E-mails received</small>
+        <div class="card-indicator">
+          <div class="indicator four" style="width: 90%"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="records table-responsive">
+
+    <div class="record-header">
+      <div class="add">
+        <span>Entries</span>
+        <select name="" id="">
+          <option value="">ID</option>
+        </select>
+
+      </div>
+
+      <div class="browse">
+        <input type="search" placeholder="Search" class="record-search">
+        <select name="" id="">
+          <option value="">Status</option>
+        </select>
+      </div>
+    </div>
+
+    <div>
+      <table width="100%">
+        <thead>
+          <tr>
+            <th><span class="las la-sort"></span> OrderId</th>
+            <th><span class="las la-sort"></span> Username</th>
+            <th><span class="las la-sort"></span> Email</th>
+            <th><span class="las la-sort"></span> Date</th>
+            <th><span class="las la-sort"></span> Phone</th>
+            <th><span class="las la-sort"></span> Total Price</th>
+            <th><span class="las la-sort"></span> Address</th>
+            <th><span class="las la-sort"></span>Payment Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of orderList | paginate: { itemsPerPage: 9, currentPage: page }"
+            (click)="onOrderIdSelected(item.orderid)" style="cursor: pointer;">
+            <td>{{item.orderid}}</td>
+            <td>{{item.username}}</td>
+            <td>{{item.email}}</td>
+            <td>{{item.date | ulinePipe:'DD/MM/YYYY'}}</td>
+            <td>{{item.phone}}</td>
+            <td>{{item.totalprice | currencyFormat}}</td>
+            <td>{{item.address}}</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <pagination-template (pageChange)="page = $event" #p="paginationApi">
+    <nav aria-label="Page navigation example" style="display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;">
+      <ul class="pagination">
+        <li class="page-item">
+          <a class="page-link" aria-label="Previous" *ngIf="!p.isFirstPage()" (click)="p.previous()">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Previous</span>
+          </a>
+        </li>
+
+        <li class="page-item" *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
+          <a class="page-link" (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">{{ page.label
+            }}</a>
+          <a class="page-link" *ngIf="p.getCurrent() === page.value">
+            <span>{{ page.label }}</span>
+          </a>
+        </li>
+
+        <li class="page-item">
+          <a class="page-link" aria-label="Next" *ngIf="!p.isLastPage()" (click)="p.next()">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">Next</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </pagination-template>
+</div>

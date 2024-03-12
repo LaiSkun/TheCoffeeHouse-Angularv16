@@ -1,0 +1,242 @@
+/* You can add global styles to this file, and also import other style files */
+body{
+  font-family: 'SF Pro Text', sans-serif;
+  line-height: 1.42857143;
+  font-size: 14px;
+
+}
+.header-list{
+  display: flex;
+  margin: 0;
+  padding: 10px 0;
+  justify-content: center;
+  align-items: center;
+}
+.header-list > div {
+  padding: 0 4.2%;
+}
+.header-list > div > a {
+  font-size: 12px;
+  color: #00000099;
+}
+.header-list img{
+  margin-right: 10px;
+}
+.header-list a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.img-block{
+  width: 40%;
+  margin-left: 100px;
+}
+.info-block{
+  width: 49%;
+  margin-top: 100px;
+}
+.info-block a{
+  display: block;
+  max-width: 282px;
+  background: #B3DDCA;
+  text-align: center;
+  font-size: 16px;
+  line-height: 40px;
+  padding: 0 15px;
+  font-weight: 600;
+  border-radius: 8px;
+  color: #fff;
+  margin-top: 20px;
+}
+.info-block a:hover{
+  color: orange;
+  text-decoration: none;
+}
+footer{
+  background-color: #000000D9;
+  color: white;
+  clear: both;
+}
+footer ul li{
+ line-height: 40px;
+ list-style-type: none;
+}
+.product{
+  position: relative;
+  object-fit: cover;
+  transition: all 0.65s ease-in-out;
+}
+.product:hover{
+  transform: scale(1.1);
+}
+.image{
+  width: 210px;
+  height: 210px;
+  transition: all 0.65s ease-in-out;
+  object-fit: cover;
+}
+.see{
+  background: url(/assets/assets/img/shopping+cart+24px-131985193788348725.png) 50% 50% no-repeat;
+  background-size: 40% 40%;
+  width: 210px;
+  height: 210px;
+  position: absolute;
+  top: 0px;
+
+  opacity: 0;
+  transition: all 0.65s ease-in-out;
+  border-radius: 10px;
+}
+.see:hover{
+  opacity: 1;
+  background-color: rgba(90, 90, 90, 0.589);
+}
+.product .title a{
+  color: #191919;
+  text-decoration: none;
+  transition: 0.5s;
+}
+.product .title a:hover{
+  color: orange;
+}
+.blog{
+  background-color: #fff7e6;
+  padding-bottom: 150px;
+}
+.blog-home{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+}
+.blog-home h2{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+  margin-top: 40px;
+}
+.blog-home img{
+  margin-right: 10px;
+}
+.blog-home-blog-title{
+  border-left: 4px solid #e57905;
+  margin: 20px 0px;
+  padding-left: 10px;
+}
+.blog-list-item{
+  height: 350px;
+  padding-left: 50px;
+  padding-right: 50px;
+  overflow: hidden;
+}
+.article-img{
+  height: 177px;
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  transition: all 0.65s ease-in-out;
+  object-fit: cover;
+
+}
+.article-item{
+  display: block;
+  overflow: hidden;
+  transition: 0.5s;
+  position: relative;
+}
+.article-img:hover{
+  transform: scale(1.2);
+}
+.blog-home-blog-title a{
+  color: #191919;
+  transition: 0.5s;
+}
+.blog-home-blog-title a:hover{
+  color: orange;
+  text-decoration: none;
+}
+.item-info{
+  overflow: hidden;
+}
+.item-info a{
+  color: #191919;
+  transition: 0.5s;
+}
+.item-info h3{
+  overflow: hidden;
+  font-size: 18px;
+  margin: 8px 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.item-info a:hover{
+  color: orange;
+  text-decoration: none;
+}
+.blog-list{
+  margin-bottom: 50px;
+}
+.menu{
+  margin-top: 20px;
+}
+.menu h3{
+  line-height: 1.4;
+  margin-bottom: 20px;
+  margin-top: 30px;
+}
+.cart{
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border-radius: 0.25rem;
+  margin-bottom: 50px;
+}
+.cart-info {
+  margin-top: 10px;
+}
+.cart-info a{
+  color: #191919;
+  transition: 0.5s;
+}
+.cart-info a:hover{
+  text-decoration: none;
+  color: orange;
+}
+.list{
+  margin-top: 90px;
+}
+.sidebar-menu .card-body ul li{
+  list-style-type: none;
+}
+.sidebar-menu input{
+  margin-left: 10px;
+}
+.btn-warning{
+  margin-top: 20px;
+  width: 150px;
+}
+.shopping-bag{
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.form-contact button{
+  margin-left: 250px;
+  line-height: 30px;
+  width: 200px;
+}
+.row{
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

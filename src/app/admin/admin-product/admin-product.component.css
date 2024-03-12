@@ -1,0 +1,7 @@
+@import url(/src/app/admin/admin-home/admin-home.component.css);
+#card:hover{
+  border: 1px solid #191970;
+    scale: 1.05;
+    transition: .2s;
+    cursor: pointer;
+}

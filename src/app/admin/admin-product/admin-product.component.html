@@ -1,0 +1,364 @@
+<div class="fade-container">
+  <section class="row" style="position: fixed; left: 22vw; top: 21vh; z-index: 2; margin-right: 115px;"
+    [@fadeInOut]=" isProductVisible ? 'visible' : 'hidden'">
+    <div class="col-12">
+      <form [formGroup]="productForm">
+        <div class="card">
+          <i class="exit fa-solid fa-xmark" (click)="toggleAddProduct()"></i>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-4">
+                <div class="form-group">
+                  <label for="ProductID">ID của sản phẩm </label>
+                  <input aria-describedby="ProductIDhelpId" class="form-control" id="ProductID"
+                    placeholder="Id của sản phẩm" type="text" formControlName="productid">
+                  <div
+                    *ngIf="productForm.get('productid')?.hasError('required') && productForm.get('productid')?.touched">
+                    Productid is required.
+                  </div>
+                  <div *ngIf="productForm.get('productid')?.hasError('exists')">
+                    Productid already exists.
+                  </div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="form-group">
+                  <label for="productName">Tên sản phẩm </label>
+                  <input aria-describedby="productNamehelpId" class="form-control" id="productName" name="tên sản phẩm"
+                    placeholder="tên sản phẩm" type="text" formControlName="productname">
+                  <div
+                    *ngIf="productForm.get('productname')?.hasError('required') && productForm.get('productname')?.touched">
+                    Productname is required.
+                  </div>
+                  <div *ngIf="productForm.get('productname')?.hasError('exists')">
+                    Productname already exists.
+                  </div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="form-group">
+                  <label for="viewcount">Giá sản phẩm</label>
+                  <input aria-describedby="" class="form-control" id="viewcount" placeholder="giá sản phẩm"
+                    type="number" formControlName="price">
+                  <div>{{ productForm.get('price')?.value | currencyFormat }}</div>
+                  <div *ngIf="productForm.get('price')?.hasError('required') && productForm.get('price')?.touched">
+                    Price is required.
+                  </div>
+                  <div *ngIf="productForm.get('price')?.hasError('minPrice')">
+                    <div class="alert alert-danger">
+                      Giá không được nhỏ hơn {{productForm.get('price')?.getError('minPrice').minPrice }}
+                      Giá hiện tại là {{productForm.get('price')?.getError('minPrice').actualPrice }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="border p-3" style="display: grid">
+                  <input accept="image/gif, image/png, image/jpeg, image/webp " id="avtimg" name="img"
+                    style="display: none;" type="file" (change)="onImageChange($event)" formControlName="img">
+                  <label for="avtimg"><img alt="" src="/assets/img/addAvatar.png" style="width: 40px;">
+                    Thêm ảnh</label>
+                  <img class="Ảnh sản phẩm" id="avt" width="100" [src]="base64Image">
+                  <span>{{imageName | shortDescription: 10 }}</span>
+                  <div *ngIf="productForm.get('img')?.hasError('required') && productForm.get('img')?.touched">
+                    Image is required.
+                  </div>
+                </div>
+              </div>
+              <div class="col-8">
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label> Danh mục sản phẩm</label>
+                      <select class="form-control" id="categoryid" name="categoryID" formControlName="category">
+                        <option *ngFor="let item of categoryList" value={{item.categoryid}}>{{item.categoryname}}
+                        </option>
+                      </select>
+                      <div
+                        *ngIf="productForm.get('category')?.hasError('required') && productForm.get('category')?.touched">
+                        Category is required.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="createdate">Ngày thêm sản phẩm </label>
+                      <input aria-describedby="createdatehelpId" class="form-control" id="createdate"
+                        placeholder="Ngày thêm sản phẩm" type="date" name="createdate" formControlName="createdate">
+                      <div
+                        *ngIf="productForm.get('createdate')?.hasError('required') && productForm.get('createdate')?.touched">
+                        Createdate is required.
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="row" style="margin-left: 0px">
+                  <label for="description">Mô tả chi tiết sản phẩm</label>
+                  <textarea class="form-control" cols="1" id="description" placeholder="Mô tả chi tiết sản phẩm"
+                    rows="2" formControlName="description"></textarea>
+                  <div
+                    *ngIf="productForm.get('description')?.hasError('required') && productForm.get('description')?.touched">
+                    Description is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer text-muted">
+              <button class="btn " id="createForm" (click)="createProduct()" type="button">Thêm</button>
+              <button class="btn" id="updateProduct" (click)="updateForm()" type="button">
+                Chỉnh Sửa
+              </button>
+              <button class="btn " id="resetForm" (click)="resetForm()" type="button">Reset</button>
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </section>
+</div>
+
+<div class="fade-container">
+  <section class="row" style="position: fixed; left: 37vw; top: 30vh; z-index: 3; margin-right: 115px;"
+    [@fadeInOut]=" isCategoryVisible ? 'visible' : 'hidden'">
+    <div class="col-12">
+      <form [formGroup]="categoryForm">
+        <div class="card">
+          <i class="exit fa-solid fa-xmark" (click)="toggleAddCategory()"></i>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="categoryid">CategoryID</label>
+                  <input aria-describedby="categoryidhelpId" class="form-control" id="categoryid"
+                    placeholder="Mã danh mục" type="text" formControlName="categoryid">
+                    <div
+                    *ngIf="categoryForm.get('categoryid')?.hasError('required') && categoryForm.get('categoryid')?.touched">
+                    Categoryid is required.
+                  </div>
+                  <div *ngIf="categoryForm.get('categoryid')?.hasError('exists')">
+                    Categoryid already exists.
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="categoryname">Category Name </label>
+                  <input aria-describedby="categorynamehelpId" class="form-control" id="categoryname" name="categoryname"
+                    placeholder="Tên danh mục" type="text" formControlName="categoryname">
+                    <div
+                    *ngIf="categoryForm.get('categoryname')?.hasError('required') && categoryForm.get('categoryname')?.touched">
+                    Categoryname is required.
+                  </div>
+                  <div *ngIf="categoryForm.get('categoryname')?.hasError('exists')">
+                    Categoryname already exists.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer text-muted">
+              <button class="btn " id="createForm" type="button" (click)="createCategory()">Thêm</button>
+              <button class="btn" id="updateProduct" type="button" (click)="updateCategoryForm()">
+                Chỉnh Sửa
+              </button>
+              <button class="btn " id="resetForm"  type="button" (click)="resetForm()">Reset</button>
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </section>
+</div>
+
+<div class="page-header">
+  <h1>Products Management</h1>
+  <small>Home / Product</small>
+</div>
+<div class="page-content">
+  <div class="analytics">
+
+    <div class="card" id="card" (click)="changeDataCategory()">
+      <div class="card-head">
+        <h2>Quản lý danh mục sản phẩm</h2>
+        <span class="las la-user-friends"></span>
+      </div>
+      <div class="card-progress">
+        <small>Tạo ra các danh mục con ....</small>
+        <div class="card-indicator">
+          <div class="indicator one" style="width: 60%"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card" id="card" (click)="changeDataProduct()">
+      <div class="card-head">
+        <h2>Quản lí sản phẩm </h2>
+        <span class="las la-eye"></span>
+      </div>
+      <div class="card-progress">
+        <small>Page views</small>
+        <div class="card-indicator">
+          <div class="indicator two" style="width: 80%"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="card">
+      <div class="card-head">
+        <h2>Quản lý giá </h2>
+        <span class="las la-shopping-cart"></span>
+      </div>
+      <div class="card-progress">
+        <small>Giảm giá , khuyến mãi,....</small>
+        <div class="card-indicator">
+          <div class="indicator three" style="width: 65%"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="card">
+      <div class="card-head">
+        <h2>47,500</h2>
+        <span class="las la-envelope"></span>
+      </div>
+      <div class="card-progress">
+        <small>New E-mails received</small>
+        <div class="card-indicator">
+          <div class="indicator four" style="width: 90%"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="records table-responsive">
+    <div class="record-header">
+      <div class="add">
+        <span>Entries</span>
+        <select name="" id="">
+          <option value="">ID</option>
+        </select>
+        <button style="z-index: 0;" *ngIf="isProductTable" (click)="toggleAddProduct()" style="margin-right: .8rem;">Add Product</button>
+        <button style="z-index: 0;" *ngIf="!isProductTable" (click)="toggleAddCategory()">Add Category</button>
+      </div>
+
+      <div class="browse">
+        <input type="search" placeholder="Search" class="record-search">
+        <select name="" id="">
+          <option value="">Status</option>
+        </select>
+      </div>
+    </div>
+    <div>
+      <table width="100%">
+        <thead>
+          <tr>
+            <th *ngFor="let header of getTableHeaders()"><span class="las la-sort"></span> {{ header }}</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of displayedData | paginate: { itemsPerPage: 5, currentPage: page }">
+            <td>
+              <ng-container *ngIf="isProductTable">
+                <img [src]="item.img" style="width: 50px; height: 50px;">
+              </ng-container>
+              <ng-container *ngIf="!isProductTable">
+                {{ item.categoryid }}
+              </ng-container>
+            </td>
+
+            <td>
+              <ng-container *ngIf="isProductTable">
+                {{ item.productid }}
+              </ng-container>
+              <ng-container *ngIf="!isProductTable">
+                {{ item.categoryname }}
+              </ng-container>
+            </td>
+            <td *ngIf="isProductTable">
+              <ng-container *ngIf="isProductTable">
+                {{ item.productname }}
+              </ng-container>
+              <ng-container *ngIf="!isProductTable">
+              </ng-container>
+            </td>
+            <td *ngIf="isProductTable">
+              <ng-container >
+                {{ item.price | currencyFormat }}
+              </ng-container>
+              <ng-container *ngIf="!isProductTable">
+              </ng-container>
+            </td>
+            <td *ngIf="isProductTable">
+              <ng-container >
+                {{ item.category.categoryid }}
+              </ng-container>
+              <ng-container *ngIf="!isProductTable">
+              </ng-container>
+            </td>
+            <td *ngIf="isProductTable">
+              <ng-container>
+                {{ item.createDate | ulinePipe:'DD/MM/YYYY' }}
+              </ng-container>
+              <ng-container *ngIf="!isProductTable">
+              </ng-container>
+            </td>
+            <td *ngIf="isProductTable">
+              <ng-container >
+                {{ item.description | shortDescription: 30 }}
+              </ng-container>
+            </td>
+            <td>
+              <ng-container *ngIf="isProductTable">
+                <button class="btn btn-sm btn-primary mr-1" (click)="loadProductData(item.productid)">Edit</button>
+                <button (click)="deleteProduct(item.productid)" class="btn btn-sm btn-danger btn-delete-user">
+                  <span>Delete</span>
+                </button>
+              </ng-container>
+              <ng-container *ngIf="!isProductTable">
+                <button class="btn btn-sm btn-primary mr-1" (click)="loadCategoryData(item.categoryid)">Edit</button>
+                <button (click)="deleteCategory(item.categoryid)" class="btn btn-sm btn-danger btn-delete-user">
+                  <span>Delete</span>
+                </button>
+              </ng-container>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+      <pagination-template (pageChange)="page = $event" #p="paginationApi">
+        <nav aria-label="Page navigation example" style="display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;">
+          <ul class="pagination">
+            <li class="page-item">
+              <a class="page-link" aria-label="Previous"  *ngIf="!p.isFirstPage()" (click)="p.previous()">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+              </a>
+            </li>
+
+            <li class="page-item" *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
+              <a class="page-link" (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">{{
+                page.label
+                }}</a>
+              <a class="page-link" *ngIf="p.getCurrent() === page.value">
+                <span>{{ page.label }}</span>
+              </a>
+            </li>
+
+            <li class="page-item">
+              <a class="page-link" aria-label="Next" *ngIf="!p.isLastPage()" (click)="p.next()">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </pagination-template>
+    </div>
+  </div>
+
+</div>

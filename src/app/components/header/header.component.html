@@ -1,0 +1,143 @@
+<div class="row">
+  <div class="col">
+      <div class="header-list">
+          <div>
+              <a href=""><img src="/assets/img/vector_706a88566eab4f009bed6eea93cd890b.webp" alt=""> 154 Cửa hàng cả
+                  nước</a>
+          </div>
+          <div>
+              <a href=""><img src="/assets/img/group_8de276faa50c486b9d485826c506803b.webp" alt=""> Đặt hàng :
+                  1800.6936</a>
+          </div>
+          <div>
+              <a href=""><img src="/assets/img/vector_c337310f409d440f890b370ff9cefe44.webp" alt=""> Freeship từ
+                  50.000vnd</a>
+          </div>
+      </div>
+  </div>
+</div>
+<nav class="row navbar navbar-expand-lg navbar-light bg-light">
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <a routerLink=""><img src="/assets/img/logo-the-coffee-house-chieu-dai.webp" alt=""
+              style="width:200px; height:20px ; margin-right: 200px; margin-left: 80px;"></a>
+      <ul class="navbar-nav hover">
+          <li class=" nav-item active hover-li">
+              <a class="nav-link color" routerLink=""><i class="fa fa-home" aria-hidden="true"></i> Trang chủ
+                  <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="hover-li nav-item">
+              <a class=" color nav-link" href="#"><i class="fa fa-share-square" aria-hidden="true"></i> Giới
+                  thiệu</a>
+          </li>
+          <li class="hover-li nav-item">
+              <a class=" color nav-link" routerLink="product/collection/all"><i class="fa fa-list" aria-hidden="true"></i>
+                  Menu</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" routerLink="contact"><i class="fa fa-phone" aria-hidden="true"></i> Liên
+                  hệ</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="#"><i class="fa fa-address-book" aria-hidden="true"></i> Góp ý</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="#"><i class="fa fa-comment" aria-hidden="true"></i> Hỏi đáp</a>
+          </li>
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false" >
+                  <i class="fa fa-user" aria-hidden="true"></i> Tài khoản
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <ng-container *ngIf="!isLogin()">
+                  <!-- Hiển thị khi chưa đăng nhập -->
+                  <a class="dropdown-item" routerLink="login">Đăng nhập</a>
+                  <a class="dropdown-item" href="#">Quên mật khẩu</a>
+                  <a class="dropdown-item" href="#">Đăng ký thành viên</a>
+                </ng-container>
+                <ng-container *ngIf="isLogin()">
+                  <!-- Hiển thị khi đã đăng nhập -->
+                  <span class="dropdown-item">Xin chào, {{getUsernameFromSessionStorage()}}</span>
+                  <a class="dropdown-item" (click)="logout()">Đăng xuất</a>
+                  <a class="dropdown-item" href="#">Đổi mật khẩu</a>
+                </ng-container>
+                <div class="dropdown-divider"></div>
+                <!-- Các mục khác không phụ thuộc vào trạng thái đăng nhập -->
+                <a class="dropdown-item" href="#">Đơn hàng</a>
+                <a class="dropdown-item" href="#">Hàng đã mua</a>
+              </div>
+          </li>
+      </ul>
+  </div>
+  <ul class="navbar-nav reverser">
+      <li class="nav-item">
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-lg cart-item" data-toggle="modal" data-target="#modelId" >
+              <img src="/assets/img/shopping+cart+24px-131985193788348725.png" alt="">
+              <span class="cart-count">{{calculateTotalQuantity()}}</span>
+          </button>
+
+          <!-- Modal -->
+          <div class="modal fade bd-example-modal-lg" id="modelId" tabindex="-1" role="dialog"
+              aria-labelledby="modelTitleId" aria-hidden="true">
+              <div class="modal-dialog modal-lg" role="document" style="width:1200px;" >
+                  <div class="modal-content" style="width:1200px;">
+                      <div class="modal-header">
+                          <h5 class="modal-title">Giỏ hàng</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                      <div class="modal-body">
+                          <div class="container-fluid">
+                              <table class="table">
+                                  <thead>
+                                      <tr>
+                                          <th></th>
+                                          <th></th>
+                                          <th>Tên hàng</th>
+                                          <th>Số lượng</th>
+                                          <th>Size</th>
+                                          <th>Topping</th>
+                                          <th>Đơn giá</th>
+                                          <th>Thành tiền</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <tr *ngFor="let item of cartItems">
+                                          <td><button class="alert-danger mt-3" (click)="removeCart(item)">Xóa</button></td>
+                                          <td>
+                                              <img [src]="item.product.img" alt=""
+                                                  style="width:50px ; height:50px ;">
+                                          </td>
+                                          <td style="line-height: 50px;">{{item.product.productname}}</td>
+                                          <td><input style="margin-top: 10px;" type="number"  min="0"
+                                            [(ngModel)]="item.quantity" (input)="handleQuantityChange(item)"></td>
+                                                  <td style="line-height: 50px;">{{ item.size.sizeid }}</td>
+                                                  <td style="line-height: 50px;" > {{getToppingNames(item.topping) }}</td>
+                                          <td style="line-height: 50px;">{{(item.product.price + item.size.price + getToppingPrice(item.topping) ) | currencyFormat }}</td>
+                                          <td
+                                              style="line-height: 50px;">{{(item.product.price +  item.size.price ) * item.quantity + + getToppingPrice(item.topping)  | currencyFormat}} </td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+                              <!-- <div class="alert alert-success" role="alert">
+                                  Thanh toán thành công !!
+                              </div> -->
+                          </div>
+                      </div>
+                      <div class="modal-footer">
+                          <div style="margin-right: 420px;">
+                              Tổng tiền : {{ calculateTotalPrice() | currencyFormat }}
+                          </div>
+                          <button type="button" class="btn btn-primary" routerLink="order">Thanh
+                              toán</button>
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </li>
+
+  </ul>
+</nav>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+  <title>Modern Admin Dashboard</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet"
+    href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+</head>
+
+<body>
+
+  <input type="checkbox" id="menu-toggle">
+  <div class="sidebar">
+    <div class="side-header">
+      <h3>M<span>odern</span></h3>
+    </div>
+
+    <div class="side-content">
+      <div class="profile">
+        <div class="profile-img bg-img" style="background-image: url(img/3.jpeg)"></div>
+        <h4>{{getUsernameFromSessionStorage()}}</h4>
+        <small>Art Director</small>
+      </div>
+
+      <div class="side-menu">
+        <ul>
+          <li>
+            <a routerLink="dashboard" class="active">
+              <span class="las la-home"></span>
+              <small>Dashboard</small>
+            </a>
+          </li>
+          <li>
+            <a routerLink="user">
+              <span class="las la-user-alt"></span>
+              <small>Users</small>
+            </a>
+          </li>
+          <li>
+            <a routerLink="product">
+              <span> <i class="fa-solid fa-shirt" style="color: #899dc1;"></i></span>
+              <small>Product</small>
+            </a>
+          </li>
+          <li>
+            <a routerLink="order">
+              <span class="las la-shopping-cart"></span>
+              <small>Orders</small>
+            </a>
+          </li>
+          <li>
+            <a href="">
+              <span class="las la-tasks"></span>
+              <small>Tasks</small>
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main-content">
+    <header>
+      <div class="header-content">
+        <label for="menu-toggle">
+          <span class="las la-bars"></span>
+        </label>
+
+        <div class="header-menu">
+          <label for="">
+            <span class="las la-search"></span>
+          </label>
+
+          <div class="notify-icon">
+            <span class="las la-envelope"></span>
+            <span class="notify">4</span>
+          </div>
+
+          <div class="notify-icon">
+            <span class="las la-bell"></span>
+            <span class="notify">3</span>
+          </div>
+
+          <div class="user">
+            <div class="bg-img" style="background-image: url(img/1.jpeg)"></div>
+
+            <span class="las la-power-off"></span>
+            <span> <a (click)="logout()">Logout</a></span>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+
+  </div>
+</body>
+</html>

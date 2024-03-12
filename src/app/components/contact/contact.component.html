@@ -1,0 +1,32 @@
+<!-- your-order-list.component.html -->
+<div class="card-body">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Address</th>
+        <th>Email</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of orderList">
+        <td  scope="row">   <a (click)="onOrderIdSelected(item.orderid)">{{ item.orderid }}</a></td>
+        <td>{{ item.address }}</td>
+        <td>{{ item.email }}</td>
+        <td>View Edit Delete</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- Hiển thị order detail khi có orderid được chọn
+<div *ngIf="selectedOrderId !== null">
+  <h3>Order Details for Order ID: {{ selectedOrderId }}</h3>
+  <ul>
+    <li *ngFor="let detail of orderDetailList">
+      <p>{{detail.orderdetailid}}</p>
+      <p>{{detail.price}}</p>
+      <p>{{detail.quantity}}</p>
+    </li>
+  </ul>
+</div> -->

@@ -1,0 +1,189 @@
+<div class="fade-container">
+  <section class="row" style="position: fixed; left: 34vw; top: 15vh; z-index: 2;" [@fadeInOut]="isDivVisible ? 'visible' : 'hidden'">
+    <div class="col-12">
+      <form [formGroup]="userForm">
+        <div class="card">
+          <i id="exit" class="fa-solid fa-x" style="margin-left: 37vw;" (click)="toggleAdd()"></i>
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <label for="username">Username</label>
+                  <input type="text" class="form-control" name="username" id="username"
+                    aria-describedby="usernamehelpId" placeholder="username" formControlName="username" >
+                    <div *ngIf="userForm.get('username')?.hasError('required') && userForm.get('username')?.touched">
+                      Username is required.
+                    </div>
+                    <div *ngIf="userForm.get('username')?.hasError('exists')">
+                      Username already exists.
+                    </div>
+                </div>
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="text" class="form-control" name="email" id="email" aria-describedby="emailhelpId"
+                    placeholder="Email" formControlName="email">
+                    <div *ngIf="userForm.get('email')?.hasError('required') && userForm.get('email')?.touched" >
+                      Email is required.
+                    </div>
+                    <div *ngIf="userForm.get('email')?.hasError('email') && userForm.get('email')?.touched">
+                      Invalid email format.
+                    </div>
+                    <div *ngIf="userForm.get('email')?.hasError('exists')">
+                      Email already exists.
+                    </div>
+                </div>
+                <div class="form-group">
+                  <label for="Phone">Phone</label>
+                  <input type="text" class="form-control" name="Phone" id="Phone" placeholder="Phone"
+                    formControlName="phone">
+                    <div *ngIf="userForm.get('phone')?.hasError('required') && userForm.get('phone')?.touched">
+                      Phone is required.
+                    </div>
+                </div>
+                <div class="form-group">
+                  <label>Role</label>
+                  <fieldset>
+                    <input type="radio" id="Admin" name="role" formControlName="role" value="admin">
+                    <label for="Admin">Admin</label>
+                    <input type="radio" id="Staff" name="role" formControlName="role" value="staff">
+                    <label for="Staff">Staff</label>
+                  </fieldset>
+                  <div *ngIf="userForm.get('role')?.hasError('required') && userForm.get('role')?.touched">
+                    Role is required.
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                  <label for="">Password</label>
+                  <input type="password" class="form-control" name="password" id="password" placeholder="password"
+                    formControlName="password">
+                    <div *ngIf="userForm.get('password')?.hasError('required') && userForm.get('password')?.touched">
+                      Password is required.
+                    </div>
+                </div>
+                <div class="form-group">
+                  <label for="confirmpass">Confirm Pass</label>
+                  <input type="password" class="form-control" name="confirmpass" id="confirmpass"
+                    aria-describedby="confirmpasshelpId" placeholder="confirm pass" formControlName="confirmPassword">
+                    <div *ngIf="userForm.hasError('mismatch') && userForm.get('confirmPassword')?.touched">
+                      Passwords do not match.
+                    </div>
+                </div>
+                <div class="form-group">
+                  <label for="Address">Address</label>
+                  <input type="text" class="form-control" name="Address" id="Address" aria-describedby="AddresshelpId"
+                    placeholder="Address" formControlName="address">
+                </div>
+                <div *ngIf="userForm.get('address')?.hasError('required') && userForm.get('address')?.touched">
+                  Address is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button class="btn" (click)="submitForm()">create</button>
+            <button class="btn" (click)="updateUserForm()">update</button>
+            <button class="btn">delete</button>
+            <button class="btn" (click)="resetForm()">reset</button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </section>
+</div>
+
+<div class="page-header">
+  <h1>Users Management</h1>
+  <small>Home / User</small>
+</div>
+<div class="records table-responsive">
+  <div class="record-header">
+    <div class="add">
+      <span>Entries</span>
+      <select name="" id="">
+        <option value="">ID</option>
+      </select>
+      <button (click)="toggleAdd()">Add User</button>
+    </div>
+
+    <div class="browse">
+      <input type="search" placeholder="Search" class="record-search">
+      <select name="" id="">
+        <option value="">Status</option>
+      </select>
+    </div>
+  </div>
+  <div *ngIf="isUsersLoaded">
+    <table width="100%">
+      <thead>
+        <tr>
+          <th><span class="las la-sort"></span> User Name</th>
+          <th><span class="las la-sort"></span> Password</th>
+          <th><span class="las la-sort"></span> Email</th>
+          <th><span class="las la-sort"></span> Phone</th>
+          <th><span class="las la-sort"></span> Address</th>
+          <th><span class="las la-sort"></span> Role </th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of userList  | paginate: { itemsPerPage: 5, currentPage: page }">
+          <td>{{item.username}}</td>
+          <td>{{item.password}}</td>
+          <td>{{item.email}}m</td>
+          <td>{{item.phone}}</td>
+          <td>{{item.address}}</td>
+          <td>{{item.role.rolename}}</td>
+          <td>
+            <!-- user-form.component.html -->
+            <button class="btn btn-sm btn-primary mr-1" (click)="loadUserData(item.username)">Edit</button>
+
+            <button (click)="deleteUser(item.username)" class="btn btn-sm btn-danger btn-delete-user"
+              >
+              <!-- <span *ngIf="isDeleting" class="spinner-border spinner-border-sm"></span> -->
+              <span >Delete</span>
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="6" class="text-center" *ngIf="!userList">
+            <span class="spinner-border spinner-border-lg align-center"></span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <pagination-template (pageChange)="page = $event" #p="paginationApi">
+      <nav aria-label="Page navigation example" style="display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;">
+        <ul class="pagination">
+          <li class="page-item">
+            <a class="page-link" aria-label="Previous" *ngIf="!p.isFirstPage()" (click)="p.previous()">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+
+          <li class="page-item" *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
+            <a class="page-link" (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">{{ page.label
+              }}</a>
+            <a class="page-link" *ngIf="p.getCurrent() === page.value">
+              <span>{{ page.label }}</span>
+            </a>
+          </li>
+
+          <li class="page-item">
+            <a class="page-link" aria-label="Next" *ngIf="!p.isLastPage()" (click)="p.next()">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Next</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </pagination-template>
+  </div>
+
+</div>

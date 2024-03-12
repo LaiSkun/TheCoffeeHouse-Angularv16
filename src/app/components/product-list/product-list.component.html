@@ -1,0 +1,84 @@
+
+<section class="menu">
+  <div class="row container" style="margin-left: 200px;">
+  <article class="col-sm-9">
+      <h3>Cà Phê Việt Nam</h3>
+      <div class="menu-list row">
+          <div *ngFor="let item of productList | paginate: { itemsPerPage: 9, currentPage: page }"  class="cart col-sm-4" style="width: 250px;">
+              <a routerLink="/product/{{item.productid}}"><img [src]="item.img"
+                  class="card-img-top img-thumbnail" alt="..."></a>
+              <div class="cart-info">
+                  <a routerLink="/product/{{item.productid}}"><h6>{{item.productname}} </h6></a>
+                  <p class="card-text">{{item.price | currencyFormat }}</p>
+              </div>
+          </div>
+      </div>
+      <pagination-template (pageChange)="page = $event" #p="paginationApi">
+        <nav aria-label="Page navigation example" style="display: flex;
+        align-items: center;
+        justify-content: center;">
+          <ul class="pagination">
+            <li class="page-item">
+              <a class="page-link"  aria-label="Previous" *ngIf="!p.isFirstPage()" (click)="p.previous()">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+              </a>
+            </li>
+
+            <li class="page-item" *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
+              <a class="page-link" (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">{{ page.label }}</a>
+              <a class="page-link" *ngIf="p.getCurrent() === page.value">
+                <span>{{ page.label }}</span>
+              </a>
+            </li>
+
+            <li class="page-item">
+              <a class="page-link" aria-label="Next" *ngIf="!p.isLastPage()" (click)="p.next()">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </pagination-template>
+  </article>
+  <aside class="list col-sm-3">
+      <div class="card sidebar-menu" data-toggle="collapse">
+          <div class="card-body">
+              <div class="row">
+                  <div class="col-sm-5">
+                      <img src="/assets/img/shoppingcart.gif" alt="" style="width:70px; margin-left: 10px;">
+                  </div>
+                  <div class="card-info col-sm-7">
+                      <ul>
+                          <li>100 item</li>
+                          <li>56$</li>
+                          <li><a href="">View cart</a></li>
+                      </ul>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="card sidebar-menu">
+          <div class="card-body">
+              <div class="row">
+                  <form action="">
+                      <input type="text" class="form-control" placeholder="Search">
+                  </form>
+              </div>
+          </div>
+      </div>
+      <div class="card" data-toggle="collapse" >
+        <ul class="list-group list-group-flush card-collapse">
+          <li class="list-group-item"><a routerLink="/product/collection/all">Tất cả</a> </li>
+      </ul>
+
+          <ul class="list-group list-group-flush card-collapse" *ngFor="let item of categoryList">
+              <li class="list-group-item"><a routerLink="/product/collection/{{item.categoryid}}">{{item.categoryname}}</a> </li>
+          </ul>
+
+      </div>
+
+  </aside>
+</div>
+</section>

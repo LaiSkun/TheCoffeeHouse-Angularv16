@@ -1,0 +1,34 @@
+<div class="modal-detail">
+<!-- order-detail-dialog.component.html -->
+<h2 mat-dialog-title>Order Detail</h2>
+<mat-dialog-content >
+  <!-- Hiển thị thông tin chi tiết đơn hàng -->
+    <table width="100%">
+      <thead>
+          <tr>
+              <th><span class="las la-sort"></span> OrderDetailId</th>
+              <th><span class="las la-sort"></span> OrderId</th>
+              <th><span class="las la-sort"></span> Product Name</th>
+              <th><span class="las la-sort"></span> Quantity</th>
+              <th><span class="las la-sort"></span> Price</th>
+              <th><span class="las la-sort"></span> Topping</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let item of data">
+            <td>{{item.orderdetailid}}</td>
+            <td>{{item.order.orderid}}</td>
+            <td>{{item.product.productname }}</td>
+            <td>{{item.quantity }}</td>
+            <td>{{item.price | currencyFormat }}</td>
+            <td>{{item.toppingname}}</td>
+          </tr>
+      </tbody>
+  </table>
+  <!-- Các trường thông tin khác của đơn hàng -->
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="closeModal()" class="modal-button">Close</button>
+</mat-dialog-actions>
+
+</div>
